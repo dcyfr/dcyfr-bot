@@ -1,0 +1,18 @@
+[
+  { "agentId": "security-engineer",              "score": 99, "totalRatings": 387, "avgRating": 4.9, "successRate": 0.98, "rank": 1  },
+  { "agentId": "typescript-pro",                 "score": 98, "totalRatings": 412, "avgRating": 4.9, "successRate": 0.97, "rank": 2  },
+  { "agentId": "fullstack-developer",            "score": 97, "totalRatings": 356, "avgRating": 4.8, "successRate": 0.97, "rank": 3  },
+  { "agentId": "frontend-developer",             "score": 96, "totalRatings": 298, "avgRating": 4.8, "successRate": 0.96, "rank": 4  },
+  { "agentId": "database-architect",             "score": 95, "totalRatings": 271, "avgRating": 4.8, "successRate": 0.96, "rank": 5  },
+  { "agentId": "architecture-reviewer",          "score": 94, "totalRatings": 243, "avgRating": 4.7, "successRate": 0.95, "rank": 6  },
+  { "agentId": "performance-profiler",           "score": 93, "totalRatings": 198, "avgRating": 4.7, "successRate": 0.94, "rank": 7  },
+  { "agentId": "devops-engineer",                "score": 92, "totalRatings": 224, "avgRating": 4.6, "successRate": 0.94, "rank": 8  },
+  { "agentId": "test-engineer",                  "score": 91, "totalRatings": 187, "avgRating": 4.6, "successRate": 0.93, "rank": 9  },
+  { "agentId": "documentation-expert",           "score": 90, "totalRatings": 163, "avgRating": 4.5, "successRate": 0.93, "rank": 10 },
+  { "agentId": "compliance-reviewer",            "score": 90, "totalRatings": 142, "avgRating": 4.5, "successRate": 0.92, "rank": 11 },
+  { "agentId": "governance-reviewer",            "score": 89, "totalRatings": 118, "avgRating": 4.4, "successRate": 0.92, "rank": 12 },
+  { "agentId": "change-lifecycle-manager",       "score": 89, "totalRatings": 104, "avgRating": 4.4, "successRate": 0.91, "rank": 13 },
+  { "agentId": "worktree-coordinator",           "score": 88, "totalRatings":  97, "avgRating": 4.3, "successRate": 0.91, "rank": 14 },
+  { "agentId": "dependency-coordinator",         "score": 88, "totalRatings":  86, "avgRating": 4.2, "successRate": 0.90, "rank": 15 },
+  { "agentId": "knowledge-governance-specialist","score": 87, "totalRatings":  62, "avgRating": 4.1, "successRate": 0.88, "rank": 16 }
+]
