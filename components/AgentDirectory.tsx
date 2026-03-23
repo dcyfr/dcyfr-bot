@@ -50,7 +50,7 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
         ))}
       </div>
 
-      <p className="text-sm text-violet-500 mb-6">
+      <p className="text-sm text-violet-400 mb-6">
         Showing {filtered.length} agent{filtered.length !== 1 ? 's' : ''}
         {activeCategory !== 'all' ? ` in ${activeCategory}` : ''}
       </p>
@@ -62,7 +62,7 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center py-16 text-violet-500">No agents in this category yet.</p>
+        <p className="text-center py-16 text-violet-400">No agents in this category yet.</p>
       )}
     </div>
   );

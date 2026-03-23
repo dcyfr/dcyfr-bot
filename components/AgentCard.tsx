@@ -36,12 +36,12 @@ export function AgentCard({ agent, reputation, compact = false }: Readonly<Props
           <h3 className="font-semibold text-violet-100 group-hover:text-white transition-colors truncate">
             {agent.name}
           </h3>
-          <p className="text-xs text-violet-500 font-mono mt-0.5 truncate">{agent.agentId}</p>
+          <p className="text-xs text-violet-400 font-mono mt-0.5 truncate">{agent.agentId}</p>
         </div>
         {reputation && (
           <div className="shrink-0 text-right">
             <p className="text-lg font-bold text-violet-300">{reputation.score}</p>
-            <p className="text-xs text-violet-500">score</p>
+            <p className="text-xs text-violet-400">score</p>
           </div>
         )}
       </div>
@@ -60,7 +60,7 @@ export function AgentCard({ agent, reputation, compact = false }: Readonly<Props
       )}
 
       {reputation && !compact && (
-        <div className="mt-3 pt-3 border-t border-violet-800/40 flex items-center gap-4 text-xs text-violet-500">
+        <div className="mt-3 pt-3 border-t border-violet-800/40 flex items-center gap-4 text-xs text-violet-400">
           <span>★ {reputation.avgRating.toFixed(1)}</span>
           <span>{reputation.totalRatings} ratings</span>
           <span>{(reputation.successRate * 100).toFixed(0)}% success</span>

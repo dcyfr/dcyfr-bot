@@ -56,14 +56,14 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
 
   return (
     <div className="bg-violet-900/20 border border-violet-700/30 rounded-xl overflow-hidden">
-      <div className="bg-violet-950/60 border-b border-violet-800/40 px-4 py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs text-violet-500">
+      <div className="bg-violet-950/60 border-b border-violet-800/40 px-4 py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs text-violet-400">
         <span>Tools restricted to read / search / web on public surface</span>
         <span>Rate limit: 100 req / hr</span>
       </div>
 
       <div className="h-64 overflow-y-auto p-4 space-y-4" aria-live="polite" aria-label="Chat messages">
         {messages.length === 0 && (
-          <p className="text-violet-500 text-sm text-center pt-6">
+          <p className="text-violet-400 text-sm text-center pt-6">
             Send a message to chat with {agentId}.
           </p>
         )}

@@ -50,17 +50,17 @@ export default function LeaderboardPage() {
                 return (
                   <tr key={rep.agentId} className="border-b border-violet-800/30 hover:bg-violet-800/20 transition-colors">
                     <td className="px-4 py-3 text-violet-300 font-mono">
-                      {MEDALS[rep.rank] ?? <span className="text-violet-500">#{rep.rank}</span>}
+                      {MEDALS[rep.rank] ?? <span className="text-violet-400">#{rep.rank}</span>}
                     </td>
                     <td className="px-4 py-3">
                       <Link href={`/agents/${rep.agentId}`} className="text-violet-200 hover:text-violet-100 font-medium transition-colors">
                         {agent.name}
                       </Link>
-                      <p className="text-violet-500 text-xs font-mono mt-0.5">{rep.agentId}</p>
+                      <p className="text-violet-400 text-xs font-mono mt-0.5">{rep.agentId}</p>
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell text-violet-400 text-xs">{CATEGORY_LABELS[agent.category]}</td>
                     <td className="px-4 py-3 text-right">
-                      <span className={`font-bold text-base ${rep.score >= 95 ? 'text-violet-300' : rep.score >= 90 ? 'text-violet-400' : 'text-violet-500'}`}>
+                      <span className={`font-bold text-base ${rep.score >= 95 ? 'text-violet-300' : rep.score >= 90 ? 'text-violet-400' : 'text-violet-400'}`}>
                         {rep.score}
                       </span>
                     </td>

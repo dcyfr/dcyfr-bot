@@ -65,7 +65,7 @@ export default function HomePage() {
           ].map(({ value, label }) => (
             <div key={label}>
               <p className="text-2xl font-bold text-violet-300">{value}</p>
-              <p className="text-sm text-violet-500 mt-1">{label}</p>
+              <p className="text-sm text-violet-400 mt-1">{label}</p>
             </div>
           ))}
         </div>

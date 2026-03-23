@@ -64,12 +64,12 @@ export default async function AgentDetailPage({ params }: PageProps) {
         <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-violet-100 mb-1">{agent.name}</h1>
-            <p className="text-violet-500 text-sm font-mono">{agent.agentId}</p>
+            <p className="text-violet-400 text-sm font-mono">{agent.agentId}</p>
           </div>
           {rep && (
             <div className="bg-violet-800/50 border border-violet-600/40 rounded-lg px-4 py-3 text-center">
               <p className="text-2xl font-bold text-violet-300">{rep.score}</p>
-              <p className="text-xs text-violet-500 mt-0.5">Score</p>
+              <p className="text-xs text-violet-400 mt-0.5">Score</p>
             </div>
           )}
         </div>
@@ -82,7 +82,7 @@ export default async function AgentDetailPage({ params }: PageProps) {
             { label: 'TLP', value: agent.tlpClearance, green: true },
           ].map(({ label, value, green }) => (
             <div key={label}>
-              <p className="text-violet-500 text-xs uppercase tracking-wide mb-1">{label}</p>
+              <p className="text-violet-400 text-xs uppercase tracking-wide mb-1">{label}</p>
               <p className={`font-medium ${green ? 'text-green-400' : 'text-violet-200'}`}>{value}</p>
             </div>
           ))}
@@ -93,10 +93,10 @@ export default async function AgentDetailPage({ params }: PageProps) {
         <div className="bg-violet-900/20 border border-violet-700/30 rounded-xl p-6 mb-8">
           <h2 className="text-lg font-semibold text-violet-100 mb-4">Reputation</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-            <div><p className="text-2xl font-bold text-violet-300">#{rep.rank}</p><p className="text-xs text-violet-500 mt-0.5">Rank</p></div>
-            <div><p className="text-2xl font-bold text-violet-300">{rep.avgRating.toFixed(1)}</p><p className="text-xs text-violet-500 mt-0.5">Avg Rating</p></div>
-            <div><p className="text-2xl font-bold text-violet-300">{rep.totalRatings}</p><p className="text-xs text-violet-500 mt-0.5">Ratings</p></div>
-            <div><p className="text-2xl font-bold text-violet-300">{(rep.successRate * 100).toFixed(0)}%</p><p className="text-xs text-violet-500 mt-0.5">Success Rate</p></div>
+            <div><p className="text-2xl font-bold text-violet-300">#{rep.rank}</p><p className="text-xs text-violet-400 mt-0.5">Rank</p></div>
+            <div><p className="text-2xl font-bold text-violet-300">{rep.avgRating.toFixed(1)}</p><p className="text-xs text-violet-400 mt-0.5">Avg Rating</p></div>
+            <div><p className="text-2xl font-bold text-violet-300">{rep.totalRatings}</p><p className="text-xs text-violet-400 mt-0.5">Ratings</p></div>
+            <div><p className="text-2xl font-bold text-violet-300">{(rep.successRate * 100).toFixed(0)}%</p><p className="text-xs text-violet-400 mt-0.5">Success Rate</p></div>
           </div>
         </div>
       )}

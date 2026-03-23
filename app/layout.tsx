@@ -36,7 +36,7 @@ export default function RootLayout({
         <footer className="border-t border-violet-800/50 mt-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-violet-400">
             <p>&copy; 2026 DCYFR. All agents MIT licensed.</p>
-            <p className="text-violet-500">dcyfr.bot — launching Q4 2026</p>
+            <p className="text-violet-400">dcyfr.bot — launching Q4 2026</p>
           </div>
         </footer>
       </body>
