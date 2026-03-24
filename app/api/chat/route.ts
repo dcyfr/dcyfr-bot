@@ -101,13 +101,23 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check API key
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('[chat] ANTHROPIC_API_KEY not set');
+  // Client init — prefer Vercel AI Gateway (BYOK, automatic caching) when available.
+  // Env vars: AI_GATEWAY_API_KEY (Vercel team gateway key) + ANTHROPIC_API_KEY (BYOK registered
+  // at vercel.com/team/settings/ai-gateway). Falls back to direct Anthropic API.
+  const gatewayKey = process.env.AI_GATEWAY_API_KEY;
+  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!gatewayKey && !anthropicKey) {
+    console.error('[chat] No API key configured (AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY)');
     return NextResponse.json({ error: 'Service unavailable' }, { status: 503, headers: rlHeaders });
   }
 
-  const client = new Anthropic();
+  const client = gatewayKey
+    ? new Anthropic({
+        apiKey: gatewayKey,
+        baseURL: 'https://ai-gateway.vercel.sh/v1/anthropic',
+      })
+    : new Anthropic({ apiKey: anthropicKey });
   const systemPrompt = buildSystemPrompt(agent);
 
   // Streaming SSE response
@@ -146,6 +156,7 @@ export async function POST(request: NextRequest) {
             event: 'agent.chat',
             agentId,
             model: 'claude-sonnet-4-6',
+            via: gatewayKey ? 'vercel-ai-gateway' : 'direct',
             inputChars: message.length,
             outputChars: fullReply.length,
             outputTokens,
