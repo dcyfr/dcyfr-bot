@@ -1,3 +1,135 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Semantic CSS variable set for dcyfr.bot (agent marketplace).
+ * Identity: violet + purple primary, ethereal / neural substrate aesthetic,
+ * dark-default. Source: docs/dcyfr-workspace/sites/dcyfr-bot.md.
+ * Matches the scaffold pattern from the other 7 DCYFR sites
+ * (openspec/changes/archive/2026-04-18-dcyfr-skeleton-sites-scaffolding).
+ */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --secure: 217 91% 60%;
+    --secure-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 142 30% 5%;
+    --warning: 43 96% 56%;
+    --warning-foreground: 43 30% 10%;
+    --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .dark {
+    --background: 262 40% 8%;
+    --foreground: 262 20% 95%;
+    --card: 262 35% 12%;
+    --card-foreground: 262 20% 95%;
+    --popover: 262 35% 12%;
+    --popover-foreground: 262 20% 95%;
+    --primary: 261 83% 68%;
+    --primary-foreground: 262 40% 8%;
+    --secondary: 262 30% 18%;
+    --secondary-foreground: 262 20% 95%;
+    --muted: 262 25% 16%;
+    --muted-foreground: 262 15% 65%;
+    --accent: 270 82% 72%;
+    --accent-foreground: 262 40% 8%;
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 262 20% 95%;
+    --border: 262 30% 22%;
+    --input: 262 30% 22%;
+    --ring: 261 83% 68%;
+    --secure: 217 91% 65%;
+    --secure-foreground: 217 30% 10%;
+    --success: 142 71% 50%;
+    --success-foreground: 142 30% 5%;
+    --warning: 43 96% 60%;
+    --warning-foreground: 43 30% 10%;
+  }
+
+  /*
+   * Identity: agent marketplace — violet primary, purple accent,
+   * ethereal / otherworldly aesthetic, dark-default.
+   * Source: docs/dcyfr-workspace/sites/dcyfr-bot.md.
+   */
+  .theme-dcyfr-bot {
+    --primary: 261 83% 58%;
+    --primary-foreground: 262 40% 98%;
+    --accent: 270 82% 62%;
+    --accent-foreground: 270 30% 98%;
+    --radius: 0.5rem;
+    --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+  }
+
+  .theme-dcyfr-bot.dark,
+  .dark .theme-dcyfr-bot {
+    /* Violet-tinted dark canvas — close to the existing violet-950 body.
+       Tuned so migrating `bg-background` → `bg-background` yields a
+       visually-equivalent result. */
+    --background: 262 40% 8%;
+    --foreground: 262 20% 95%;
+    --card: 262 35% 12%;
+    --card-foreground: 262 20% 95%;
+    --popover: 262 35% 12%;
+    --popover-foreground: 262 20% 95%;
+    --muted: 262 25% 16%;
+    --muted-foreground: 262 15% 65%;
+    --border: 262 30% 22%;
+    --input: 262 30% 22%;
+    --primary: 261 83% 68%;
+    --primary-foreground: 262 40% 8%;
+    --accent: 270 82% 72%;
+    --accent-foreground: 262 40% 8%;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

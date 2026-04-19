@@ -41,8 +41,8 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
             onClick={() => setActiveCategory(cat.value)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               activeCategory === cat.value
-                ? 'bg-violet-600 border-violet-500 text-white'
-                : 'bg-violet-900/20 border-violet-700/40 text-violet-400 hover:text-violet-200 hover:border-violet-600/60'
+                ? 'bg-primary border-primary/50 text-white'
+                : 'bg-card/20 border-border/80/40 text-muted-foreground hover:text-muted-foreground hover:border-primary/60/60'
             }`}
           >
             {cat.label}
@@ -50,7 +50,7 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
         ))}
       </div>
 
-      <p className="text-sm text-violet-400 mb-6">
+      <p className="text-sm text-muted-foreground mb-6">
         Showing {filtered.length} agent{filtered.length !== 1 ? 's' : ''}
         {activeCategory !== 'all' ? ` in ${activeCategory}` : ''}
       </p>
@@ -62,7 +62,7 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center py-16 text-violet-400">No agents in this category yet.</p>
+        <p className="text-center py-16 text-muted-foreground">No agents in this category yet.</p>
       )}
     </div>
   );

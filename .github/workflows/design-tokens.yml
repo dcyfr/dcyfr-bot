@@ -1,0 +1,55 @@
+# Design-tokens lint — backstop for the palette-class migration.
+#
+# Fails the PR if any legacy `dcyfr-primary-N` / `dcyfr-accent-N` palette
+# class resurfaces in `.tsx` / `.ts` / `.css` source. Enforces the
+# CLAUDE.md "No hardcoded design tokens" rule for the one case where
+# zero-violations is guaranteed post-migration.
+#
+# The informational `no-hardcoded-colors` rule (hardcoded Tailwind scales,
+# arbitrary hex, CSS literal color calls) is NOT enforced here — it
+# surfaces legacy debt that needs its own migration sweep. Run
+# `scripts/polish-loop/lint-design-tokens.mjs --site <name>` locally to
+# inspect the informational pass.
+#
+# Related:
+# - openspec/changes/archive/2026-04-18-dcyfr-palette-class-migration/
+# - CLAUDE.md Rules (dcyfr-local/no-hardcoded-*)
+
+name: Design Tokens
+
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - 'src/**'
+      - 'tailwind.config.*'
+      - '.github/workflows/design-tokens.yml'
+  workflow_dispatch:
+
+jobs:
+  palette-backstop:
+    name: no-legacy-dcyfr-palette
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for legacy palette classes
+        run: |
+          set +e
+          matches=$(grep -rnE '(bg|border|divide|text|placeholder|from|via|to|ring)-dcyfr-(primary|accent)-[0-9]+' \
+            --include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' \
+            --include='*.css' --include='*.mdx' \
+            app components lib src 2>/dev/null \
+            | grep -v 'tailwind.preset' || true)
+          if [ -n "$matches" ]; then
+            echo "::error::Legacy DCYFR palette classes reintroduced. Migrate via scripts/polish-loop/palette-class-codemod.mjs."
+            echo "$matches" | while read -r line; do
+              echo "::error file=${line%%:*}::$line"
+            done
+            exit 1
+          fi
+          echo "✓ no legacy palette classes found"
