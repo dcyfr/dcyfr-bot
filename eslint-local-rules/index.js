@@ -10,5 +10,6 @@ module.exports = {
   'no-hardcoded-colors': require('./no-hardcoded-colors'),
   'no-hardcoded-typography': require('./no-hardcoded-typography'),
   'no-deprecated-design-tokens': require('./no-deprecated-design-tokens'),
+  'no-legacy-dcyfr-palette': require('./no-legacy-dcyfr-palette'),
 };
 /* eslint-enable @typescript-eslint/no-require-imports */

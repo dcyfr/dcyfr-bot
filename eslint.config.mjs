@@ -41,6 +41,7 @@ const eslintConfig = [
       "dcyfr-local/no-hardcoded-colors": "error",
       "dcyfr-local/no-hardcoded-typography": "warn",
       "dcyfr-local/no-deprecated-design-tokens": "error",
+      "dcyfr-local/no-legacy-dcyfr-palette": "error",
     },
   },
 ];
