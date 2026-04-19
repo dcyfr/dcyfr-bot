@@ -1,44 +1,91 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
+import { ThemeProvider } from '@/components/theme-provider';
+import { PageShell, SiteNav, SiteFooter } from '@/components/chrome';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'DCYFR Agents — AI Agent Marketplace',
-  description: 'Browse, deploy, and chat with production-grade AI agents from the DCYFR workspace.',
+  title: {
+    default: 'DCYFR Agents — AI Agent Marketplace',
+    template: '%s | dcyfr.bot',
+  },
+  description:
+    'Browse, deploy, and chat with production-grade AI agents from the DCYFR workspace.',
+  metadataBase: new URL('https://dcyfr.bot'),
+  openGraph: {
+    siteName: 'dcyfr.bot',
+    type: 'website',
+    url: 'https://dcyfr.bot',
+  },
 };
+
+const DcyfrBotLogo = (
+  <span className="inline-flex items-center gap-2 text-lg font-bold tracking-tight">
+    <span className="text-muted-foreground">⬡</span>
+    <span>
+      dcyfr<span className="text-muted-foreground">.bot</span>
+    </span>
+  </span>
+);
+
+const NAV_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/agents', label: 'Agents' },
+  { href: '/leaderboard', label: 'Leaderboard' },
+];
+
+const FOOTER_COLUMNS = [
+  {
+    title: 'Agents',
+    links: [
+      { href: '/agents', label: 'Directory' },
+      { href: '/leaderboard', label: 'Leaderboard' },
+    ],
+  },
+  {
+    title: 'Ecosystem',
+    links: [
+      { href: 'https://dcyfr.io', label: 'dcyfr.io', external: true },
+      { href: 'https://github.com/dcyfr', label: 'GitHub', external: true },
+    ],
+  },
+];
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="theme-dcyfr-bot dark" suppressHydrationWarning>
-      <body className={`${inter.className} bg-background text-foreground min-h-screen flex flex-col`}>
-        <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-          <nav
-            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
-            aria-label="Main navigation"
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} theme-dcyfr-bot`}
+    >
+      <body className="min-h-screen font-sans antialiased">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <PageShell
+            nav={<SiteNav logo={DcyfrBotLogo} links={NAV_LINKS} />}
+            footer={
+              <SiteFooter
+                brand={{
+                  name: 'dcyfr.bot',
+                  tagline: 'AI Agent Marketplace',
+                }}
+                columns={FOOTER_COLUMNS}
+                copyright="© 2026 DCYFR. All agents MIT licensed. — launching Q4 2026"
+              />
+            }
+            padding="none"
+            maxWidth="full"
           >
-            <Link href="/" className="flex items-center gap-2 text-foreground/80 font-bold text-lg hover:text-foreground transition-colors">
-              <span className="text-muted-foreground">⬡</span>
-              <span>dcyfr<span className="text-muted-foreground">.bot</span></span>
-            </Link>
-            <div className="flex items-center gap-6 text-sm font-medium">
-              <Link href="/" className="text-muted-foreground hover:text-foreground/80 transition-colors">Home</Link>
-              <Link href="/agents" className="text-muted-foreground hover:text-foreground/80 transition-colors">Agents</Link>
-              <Link href="/leaderboard" className="text-muted-foreground hover:text-foreground/80 transition-colors">Leaderboard</Link>
-            </div>
-          </nav>
-        </header>
-        <main className="flex-1">{children}</main>
-        <footer className="border-t border-border/50 mt-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-            <p>&copy; 2026 DCYFR. All agents MIT licensed.</p>
-            <p className="text-muted-foreground">dcyfr.bot — launching Q4 2026</p>
-          </div>
-        </footer>
+            {children}
+          </PageShell>
+        </ThemeProvider>
       </body>
     </html>
   );
