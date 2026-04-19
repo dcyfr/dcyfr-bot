@@ -29,7 +29,7 @@ export default function HomePage() {
             <span className="w-2 h-2 rounded-full bg-primary/80 animate-pulse" aria-hidden="true" />
             Launching Q4 2026
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
             32 Production Agents.{' '}
             <span className="text-muted-foreground">One Marketplace.</span>
           </h1>
@@ -40,7 +40,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/agents"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary text-foreground font-semibold px-8 py-3 rounded-lg transition-colors"
             >
               Browse Agents
             </Link>

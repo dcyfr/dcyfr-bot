@@ -6,7 +6,7 @@
     "dev": "next dev -p 3304",
     "build": "next build",
     "start": "next start -p 3304",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:snapshots": "playwright test e2e/snapshots.spec.ts --project=chromium",
     "test:snapshots:update": "playwright test e2e/snapshots.spec.ts --project=chromium --update-snapshots"

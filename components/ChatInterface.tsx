@@ -123,7 +123,7 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
               msg.role === 'user'
-                ? 'bg-primary/70 text-white'
+                ? 'bg-primary/70 text-foreground'
                 : 'bg-muted/50 border border-border/80/40 text-muted-foreground'
             }`}>
               <p className="whitespace-pre-wrap">
@@ -165,7 +165,7 @@ export function ChatInterface({ agentId }: Readonly<Props>) {
         <button
           onClick={() => void handleSend()}
           disabled={isLoading || !input.trim()}
-          className="shrink-0 bg-primary hover:bg-primary disabled:bg-muted disabled:text-primary text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+          className="shrink-0 bg-primary hover:bg-primary disabled:bg-muted disabled:text-primary text-foreground font-medium px-4 py-2 rounded-lg text-sm transition-colors"
         >
           Send
         </button>

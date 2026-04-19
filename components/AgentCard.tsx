@@ -39,7 +39,7 @@ export function AgentCard({ agent, reputation, compact = false }: Readonly<Props
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-foreground/80 group-hover:text-white transition-colors truncate">
+          <h3 className="font-semibold text-foreground/80 group-hover:text-foreground transition-colors truncate">
             {agent.name}
           </h3>
           <p className="text-xs text-muted-foreground font-mono mt-0.5 truncate">{agent.agentId}</p>

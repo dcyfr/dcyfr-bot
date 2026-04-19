@@ -21,7 +21,7 @@ export default function RootLayout({
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
             aria-label="Main navigation"
           >
-            <Link href="/" className="flex items-center gap-2 text-foreground/80 font-bold text-lg hover:text-white transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-foreground/80 font-bold text-lg hover:text-foreground transition-colors">
               <span className="text-muted-foreground">⬡</span>
               <span>dcyfr<span className="text-muted-foreground">.bot</span></span>
             </Link>

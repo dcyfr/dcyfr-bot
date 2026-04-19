@@ -41,7 +41,7 @@ export function AgentDirectory({ agents, reputation }: Readonly<Props>) {
             onClick={() => setActiveCategory(cat.value)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               activeCategory === cat.value
-                ? 'bg-primary border-primary/50 text-white'
+                ? 'bg-primary border-primary/50 text-foreground'
                 : 'bg-card/20 border-border/80/40 text-muted-foreground hover:text-muted-foreground hover:border-primary/60/60'
             }`}
           >
