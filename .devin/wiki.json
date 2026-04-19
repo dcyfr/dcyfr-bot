@@ -1,0 +1,8 @@
+{
+  "repo_notes": [
+    {
+      "content": "Bot framework and utilities for DCYFR automation. Document the bot abstraction layer, common bot patterns, message handling, command parsing, and how bots integrate with various platforms (Discord, Slack, etc.).",
+      "author": "DCYFR Engineering"
+    }
+  ]
+}
