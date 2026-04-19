@@ -1,17 +1,26 @@
-# Design-tokens lint — backstop for the palette-class migration.
+# Design-tokens CI backstop — enforces the scaffold contract from
+# openspec/specs/dcyfr-site-scaffold (landed via
+# openspec/changes/dcyfr-sites-design-parity Phase 3.9 / 4.1).
 #
-# Fails the PR if any legacy `dcyfr-primary-N` / `dcyfr-accent-N` palette
-# class resurfaces in `.tsx` / `.ts` / `.css` source. Enforces the
-# CLAUDE.md "No hardcoded design tokens" rule for the one case where
-# zero-violations is guaranteed post-migration.
+# Three gates, failing independently so feedback stays granular:
 #
-# The informational `no-hardcoded-colors` rule (hardcoded Tailwind scales,
-# arbitrary hex, CSS literal color calls) is NOT enforced here — it
-# surfaces legacy debt that needs its own migration sweep. Run
-# `scripts/polish-loop/lint-design-tokens.mjs --site <name>` locally to
-# inspect the informational pass.
+#   1. legacy-palette  — `dcyfr-primary-N` / `dcyfr-accent-N` scaled AND
+#                        unscaled refs. Replaces the narrow grep from the
+#                        2026-04-18 palette-class-migration backstop.
+#   2. theme-blind     — `text-white` / `bg-black` / etc. — the primitive
+#                        colors that ignore light/dark mode and caused the
+#                        2026-04-19 user-reported regressions.
+#   3. identity-clobber — `.theme-<name>` blocks overriding surface tokens
+#                        (--card, --muted, etc.) WITHOUT matching
+#                        `.dark .theme-<name>` scope. CSS-cascade bug fixed
+#                        in dcyfr-work + dcyfr-app during the 2026-04-19 sweep.
+#
+# Gates 1–2 are enforced by the dcyfr-local ESLint plugin (`npm run lint`
+# with `no-legacy-dcyfr-palette` + `no-hardcoded-colors` at error severity).
+# Gate 3 is an inline CSS sniff because ESLint is awkward for CSS.
 #
 # Related:
+# - openspec/changes/dcyfr-sites-design-parity/ (Phase 3.9)
 # - openspec/changes/archive/2026-04-18-dcyfr-palette-class-migration/
 # - CLAUDE.md Rules (dcyfr-local/no-hardcoded-*)
 
@@ -25,31 +34,89 @@ on:
       - 'lib/**'
       - 'src/**'
       - 'tailwind.config.*'
+      - 'eslint.config.*'
+      - 'eslint-local-rules/**'
       - '.github/workflows/design-tokens.yml'
   workflow_dispatch:
 
 jobs:
-  palette-backstop:
-    name: no-legacy-dcyfr-palette
+  eslint-guards:
+    name: lint (palette + primitive-color guards)
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Scan for legacy palette classes
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint (no-legacy-dcyfr-palette + no-hardcoded-colors at error)
+        run: npm run lint
+
+  identity-clobber:
+    name: identity-class dark-scope parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check .theme-<name> surface overrides have .dark scope
         run: |
           set +e
-          matches=$(grep -rnE '(bg|border|divide|text|placeholder|from|via|to|ring)-dcyfr-(primary|accent)-[0-9]+' \
-            --include='*.tsx' --include='*.ts' --include='*.jsx' --include='*.js' \
-            --include='*.css' --include='*.mdx' \
-            app components lib src 2>/dev/null \
-            | grep -v 'tailwind.preset' || true)
-          if [ -n "$matches" ]; then
-            echo "::error::Legacy DCYFR palette classes reintroduced. Migrate via scripts/polish-loop/palette-class-codemod.mjs."
-            echo "$matches" | while read -r line; do
-              echo "::error file=${line%%:*}::$line"
-            done
+          css_file="app/globals.css"
+          [ -f "$css_file" ] || css_file="src/app/globals.css"
+          if [ ! -f "$css_file" ]; then
+            echo "::error::No globals.css found at app/ or src/app/"
             exit 1
           fi
-          echo "✓ no legacy palette classes found"
+
+          # Extract the identity block (.theme-<name>), check if it overrides any
+          # surface token (--background, --card*, --muted*, --popover*, --secondary*,
+          # --border, --input, --destructive*) without a matching dark-scope block.
+          node - <<'NODE'
+          const { readFileSync } = require('node:fs');
+          const css = readFileSync(process.env.CSS_FILE || 'app/globals.css', 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+          const RISKY = [
+            'background', 'foreground', 'card', 'card-foreground',
+            'popover', 'popover-foreground', 'muted', 'muted-foreground',
+            'secondary', 'secondary-foreground', 'border', 'input',
+            'destructive', 'destructive-foreground',
+          ];
+          function body(re) {
+            const m = re.exec(css);
+            if (!m) return null;
+            let i = m.index + m[0].length;
+            while (i < css.length && css[i] !== '{') i++;
+            if (css[i] !== '{') return null;
+            let depth = 1, start = ++i;
+            while (i < css.length && depth > 0) {
+              if (css[i] === '{') depth++;
+              else if (css[i] === '}') depth--;
+              if (depth === 0) break;
+              i++;
+            }
+            return css.slice(start, i);
+          }
+          const idMatch = /\.theme-([\w-]+)\s*(?=\{)/.exec(css);
+          if (!idMatch) { console.log('✓ no identity block'); process.exit(0); }
+          const name = idMatch[1];
+          const idBody = body(new RegExp(`\\.theme-${name}\\s*(?=\\{)`, 'g')) ?? '';
+          const ov = [...idBody.matchAll(/--([\w-]+)\s*:/g)].map((m) => m[1]).filter((v) => RISKY.includes(v));
+          if (ov.length === 0) { console.log(`✓ .theme-${name} is brand-only — no risky overrides`); process.exit(0); }
+          const hasDarkScope = new RegExp(`\\.theme-${name}\\.dark|\\.dark\\s+\\.theme-${name}`).test(css);
+          if (!hasDarkScope) {
+            console.error(`::error::Identity clobber: .theme-${name} overrides surface tokens [${ov.join(', ')}] without a matching .dark .theme-${name} scope. See openspec/changes/dcyfr-sites-design-parity.`);
+            process.exit(1);
+          }
+          console.log(`✓ .theme-${name} overrides [${ov.join(', ')}] properly dark-scoped`);
+          NODE
+        env:
+          CSS_FILE: ${{ hashFiles('app/globals.css') != '' && 'app/globals.css' || 'src/app/globals.css' }}
