@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ThemeProvider } from '@/components/theme-provider';
 import { PageShell, SiteNav, SiteFooter } from '@/components/chrome';
 import './globals.css';
@@ -86,6 +88,8 @@ export default function RootLayout({
             {children}
           </PageShell>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
