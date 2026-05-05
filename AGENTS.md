@@ -24,3 +24,5 @@ npm run typecheck
 
 - Keep marketplace behavior and content aligned with the existing app structure.
 - Favor minimal App Router changes over introducing new frameworks or patterns.
+
+<!-- Vercel redirect verification ping: 2026-05-04 (migrated dcyfr → dcyfr-labs 2026-05-03) -->
